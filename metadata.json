@@ -1,5 +1,8 @@
 {
   "name": "PropMinds",
   "description": "A comprehensive property management dashboard for landlords to manage tenants, units, payments, and maintenance.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

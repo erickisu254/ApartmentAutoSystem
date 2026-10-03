@@ -16,7 +16,7 @@ import {
   MaintenanceTicket,
 } from "../types";
 
-const API_BASE = "http://localhost:3001/api";
+const API_BASE = "/api";
 
 interface AppContextType {
   properties: Property[];
@@ -30,55 +30,55 @@ interface AppContextType {
 
   // Auth
   isAuthenticated: boolean;
-  login: (username: string, pass: string) => Promise;
+  login: (username: string, pass: string) => Promise<boolean>;
   logout: () => void;
   updateCredentials: (newUsername: string, newPass: string) => void;
   checkPassword: (pass: string) => boolean;
 
   // Actions
-  addProperty: (p: Property) => Promise;
-  updateProperty: (p: Property) => Promise;
-  deleteProperty: (id: string) => Promise;
-  addUnit: (u: Unit) => Promise;
-  updateUnit: (u: Unit) => Promise;
-  deleteUnit: (id: string) => Promise;
-  addTenant: (t: Tenant) => Promise;
-  updateTenant: (t: Tenant) => Promise;
-  deleteTenant: (id: string) => Promise;
-  restoreTenant: (id: string) => Promise;
-  signLease: (tenantId: string, signatureDataUrl: string) => Promise;
-  recordPayment: (p: Payment) => Promise;
-  addExpense: (e: Expense) => Promise;
-  updateExpense: (e: Expense) => Promise;
-  deleteExpense: (id: string) => Promise;
-  addMaintenanceTicket: (ticket: MaintenanceTicket) => Promise;
-  updateMaintenanceTicket: (ticket: MaintenanceTicket) => Promise;
-  deleteMaintenanceTicket: (id: string) => Promise;
-  convertTicketToExpense: (ticketId: string, actualCost: number) => Promise;
+  addProperty: (p: Property) => Promise<void>;
+  updateProperty: (p: Property) => Promise<void>;
+  deleteProperty: (id: string) => Promise<void>;
+  addUnit: (u: Unit) => Promise<void>;
+  updateUnit: (u: Unit) => Promise<void>;
+  deleteUnit: (id: string) => Promise<void>;
+  addTenant: (t: Tenant) => Promise<void>;
+  updateTenant: (t: Tenant) => Promise<void>;
+  deleteTenant: (id: string) => Promise<void>;
+  restoreTenant: (id: string) => Promise<void>;
+  signLease: (tenantId: string, signatureDataUrl: string) => Promise<void>;
+  recordPayment: (p: Payment) => Promise<void>;
+  addExpense: (e: Expense) => Promise<void>;
+  updateExpense: (e: Expense) => Promise<void>;
+  deleteExpense: (id: string) => Promise<void>;
+  addMaintenanceTicket: (ticket: MaintenanceTicket) => Promise<void>;
+  updateMaintenanceTicket: (ticket: MaintenanceTicket) => Promise<void>;
+  deleteMaintenanceTicket: (id: string) => Promise<void>;
+  convertTicketToExpense: (ticketId: string, actualCost: number) => Promise<void>;
   addNote: (
     targetId: string,
     note: Note,
     targetType: "tenant" | "unit",
-  ) => Promise;
-  resetToDemoData: () => Promise;
+  ) => Promise<void>;
+  resetToDemoData: () => Promise<void>;
 }
 
-const AppContext = createContext(undefined);
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = (props: { children: ReactNode }) => {
   const { children } = props;
 
-  const [token, setToken] = useState(() =>
+  const [token, setToken] = useState<string | null>(() =>
     localStorage.getItem("propMinds_token"),
   );
-  const [isAuthenticated, setIsAuthenticated] = useState(!!token);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!token);
 
-  const [properties, setProperties] = useState([]);
-  const [units, setUnits] = useState([]);
-  const [tenants, setTenants] = useState([]);
-  const [payments, setPayments] = useState([]);
-  const [expenses, setExpenses] = useState([]);
-  const [maintenanceTickets, setMaintenanceTickets] = useState([]);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [units, setUnits] = useState<Unit[]>([]);
+  const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [payments, setPayments] = useState<Payment[]>([]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [maintenanceTickets, setMaintenanceTickets] = useState<MaintenanceTicket[]>([]);
 
   const [darkMode, setDarkMode] = useState(
     () => localStorage.getItem("propMinds_theme") === "dark",

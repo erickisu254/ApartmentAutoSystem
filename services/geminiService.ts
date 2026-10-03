@@ -2,11 +2,11 @@ export const generateEmailDraft = async (
   tenantName: string,
   type: "overdue_rent" | "lease_expiry" | "maintenance_notice" | "welcome",
   details: string,
-): Promise => {
+): Promise<string> => {
   try {
     const token = localStorage.getItem("propMinds_token");
     const res = await fetch(
-      "http://localhost:3001/api/ai/draft-communication",
+      "/api/ai/draft-communication",
       {
         method: "POST",
         headers: {
